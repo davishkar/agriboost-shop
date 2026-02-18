@@ -24,77 +24,43 @@ include '../includes/header.php';
 ?>
 
 <style>
-    .admin-container {
-        max-width: 1200px;
-        margin: 2rem auto;
-    }
-    
-    .users-table {
-        width: 100%;
-        background: white;
-        border-radius: 10px;
-        overflow: hidden;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-    }
-    
+    .admin-container { max-width: 1200px; margin: 2rem auto; padding: 0 1rem; }
+
+    .users-table { width: 100%; border-collapse: collapse; }
     .users-table th {
-        background-color: #2E6F40;
-        color: white;
-        padding: 1rem;
-        text-align: left;
+        background: linear-gradient(90deg,#2E6F40,#419759);
+        color: white; padding: 1rem 1.2rem; text-align: left; font-size: .84rem; letter-spacing: .04em;
     }
-    
-    .users-table td {
-        padding: 1rem;
-        border-bottom: 1px solid #ddd;
-    }
-    
-    .role-badge {
-        padding: 0.25rem 0.75rem;
-        border-radius: 15px;
-        font-size: 0.85rem;
-        font-weight: bold;
-    }
-    
-    .role-admin {
-        background-color: #d1ecf1;
-        color: #0c5460;
-    }
-    
-    .role-user {
-        background-color: #d4edda;
-        color: #155724;
-    }
-    
-    .stats-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        gap: 1rem;
-        margin-bottom: 2rem;
-    }
-    
+    .users-table td { padding: .85rem 1.2rem; border-bottom: 1px solid rgba(0,0,0,0.06); font-size: .88rem; }
+    .users-table tr:last-child td { border-bottom: none; }
+    .users-table tbody tr:hover { background: rgba(85,193,115,0.06); }
+
+    .stats-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(180px,1fr)); gap: 1.2rem; margin-bottom: 2rem; }
     .stat-card {
-        background: white;
-        padding: 1.5rem;
-        border-radius: 10px;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        text-align: center;
+        padding: 1.4rem 1.6rem; text-align: center;
+        transition: transform .25s, box-shadow .25s;
     }
-    
-    .stat-card h3 {
-        color: #2E6F40;
-        font-size: 2rem;
-        margin-bottom: 0.5rem;
-    }
-    
-    .stat-card p {
-        color: #666;
-        font-size: 0.9rem;
-    }
+    .stat-card:hover { transform: translateY(-4px); box-shadow: 0 12px 36px rgba(0,0,0,0.18), inset 0 1px 0 rgba(255,255,255,0.7); }
+    .stat-card h3 { font-size: 2rem; font-weight: 800; background: linear-gradient(135deg,#2E6F40,#55C173); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: .3rem; }
+    .stat-card p  { color: #419759; font-size: .82rem; font-weight: 600; }
+
+    .section-heading { color: #fff; font-size: 1rem; font-weight: 700; margin-bottom: 1rem; display: flex; align-items: center; gap: .5rem; }
+    .section-heading span { display: inline-block; width: 4px; height: 18px; background: linear-gradient(180deg,#55C173,#2E6F40); border-radius: 2px; }
 </style>
 
 <div class="container admin-container">
-    <h2 style="color: #2E6F40; margin-bottom: 1.5rem;">👥 View Users</h2>
+    <!-- Breadcrumb Navigation -->
+    <nav aria-label="breadcrumb" style="margin-bottom: 1.2rem;">
+        <ol class="glass-breadcrumb" style="display:flex;align-items:center;gap:.4rem;list-style:none;padding:.6rem 1rem;border-radius:10px;font-size:.85rem;flex-wrap:wrap;">
+            <li><a href="/agriboost-shop/index.php" style="color:#6AEC8E;text-decoration:none;font-weight:500;">🏠 Home</a></li>
+            <li style="color:rgba(255,255,255,0.5);">›</li>
+            <li><a href="index.php" style="color:#6AEC8E;text-decoration:none;font-weight:500;">📊 Dashboard</a></li>
+            <li style="color:rgba(255,255,255,0.5);">›</li>
+            <li><span style="color:#fff;font-weight:600;">👥 Users</span></li>
+        </ol>
+    </nav>
+
+    <h2 style="color:#fff;font-weight:800;font-size:1.6rem;margin-bottom:1.5rem;text-shadow:0 2px 8px rgba(0,0,0,0.3);">👥 View Users</h2>
     
     <!-- User Statistics -->
     <div class="stats-grid">
@@ -103,21 +69,23 @@ include '../includes/header.php';
         $total_admins = $conn->query("SELECT COUNT(*) as count FROM admins")->fetch_assoc()['count'];
         $new_users_today = $conn->query("SELECT COUNT(*) as count FROM users WHERE DATE(created_at) = CURDATE()")->fetch_assoc()['count'];
         ?>
-        <div class="stat-card">
+        <div class="glass-card stat-card">
             <h3><?php echo $total_users; ?></h3>
             <p>Total Users</p>
         </div>
-        <div class="stat-card">
+        <div class="glass-card stat-card">
             <h3><?php echo $total_admins; ?></h3>
             <p>Total Admins</p>
         </div>
-        <div class="stat-card">
+        <div class="glass-card stat-card">
             <h3><?php echo $new_users_today; ?></h3>
             <p>New Today</p>
         </div>
     </div>
     
     <!-- Users Table -->
+    <p class="section-heading"><span></span> All Users</p>
+    <div class="glass-table">
     <table class="users-table">
         <thead>
             <tr>
@@ -148,6 +116,7 @@ include '../includes/header.php';
             <?php endif; ?>
         </tbody>
     </table>
+    </div>
 </div>
 
 <?php include '../includes/footer.php'; ?>

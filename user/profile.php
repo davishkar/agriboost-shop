@@ -95,21 +95,20 @@ include '../includes/header.php';
 ?>
 
 <style>
-    .profile-container {
-        max-width: 700px;
-        margin: 2rem auto;
+    .profile-container { max-width: 700px; margin: 2rem auto; padding: 0 1rem; }
+    .profile-section { padding: 2rem; }
+    .form-input {
+        width: 100%; padding: .75rem .9rem;
+        border: 1px solid rgba(46,111,64,0.25); border-radius: 8px;
+        background: rgba(255,255,255,0.8); font-size: .9rem;
+        transition: border-color .2s, box-shadow .2s;
     }
-    
-    .profile-section {
-        background: white;
-        padding: 2rem;
-        border-radius: 10px;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-    }
+    .form-input:focus { outline:none; border-color:#55C173; box-shadow: 0 0 0 3px rgba(85,193,115,0.2); }
+    .form-label { display:block; margin-bottom:.4rem; font-weight:600; color:#1C4A29; font-size:.88rem; }
 </style>
 
 <div class="container profile-container">
-    <h2 style="color: #2E6F40; margin-bottom: 1.5rem;">👤 My Profile</h2>
+    <h2 style="color:#fff;font-weight:800;font-size:1.6rem;margin-bottom:1.5rem;text-shadow:0 2px 8px rgba(0,0,0,0.3);">👤 My Profile</h2>
     
     <?php if ($error): ?>
         <div class="alert alert-error"><?php echo $error; ?></div>
@@ -119,8 +118,8 @@ include '../includes/header.php';
         <div class="alert alert-success"><?php echo $success; ?></div>
     <?php endif; ?>
     
-    <div class="profile-section">
-        <div style="background-color: #f8f9fa; padding: 1rem; border-radius: 5px; margin-bottom: 1.5rem;">
+    <div class="glass-card profile-section">
+        <div style="background:rgba(240,253,244,0.7);backdrop-filter:blur(6px);padding:1rem;border-radius:10px;margin-bottom:1.5rem;border:1px solid rgba(85,193,115,0.2);">
             <p style="margin: 0.25rem 0;"><strong>Member Since:</strong> <?php echo date('F j, Y', strtotime($user['created_at'])); ?></p>
             <p style="margin: 0.25rem 0;"><strong>Email:</strong> <?php echo htmlspecialchars($user['email']); ?></p>
         </div>
@@ -128,24 +127,21 @@ include '../includes/header.php';
         <h3 style="color: #2E6F40; margin-bottom: 1rem;">Update Profile</h3>
         
         <form method="POST" action="">
-            <div style="margin-bottom: 1rem;">
-                <label style="display: block; margin-bottom: 0.5rem; font-weight: bold;">Full Name *</label>
-                <input type="text" name="name" required 
-                       style="width: 100%; padding: 0.75rem; border: 1px solid #ddd; border-radius: 5px;"
+            <div style="margin-bottom:1rem;">
+                <label class="form-label">Full Name *</label>
+                <input type="text" name="name" required class="form-input"
                        value="<?php echo htmlspecialchars($user['name']); ?>">
             </div>
             
-            <div style="margin-bottom: 1rem;">
-                <label style="display: block; margin-bottom: 0.5rem; font-weight: bold;">Phone</label>
-                <input type="tel" name="phone" 
-                       style="width: 100%; padding: 0.75rem; border: 1px solid #ddd; border-radius: 5px;"
+            <div style="margin-bottom:1rem;">
+                <label class="form-label">Phone</label>
+                <input type="tel" name="phone" class="form-input"
                        value="<?php echo htmlspecialchars($user['phone']); ?>">
             </div>
             
-            <div style="margin-bottom: 1.5rem;">
-                <label style="display: block; margin-bottom: 0.5rem; font-weight: bold;">Address</label>
-                <textarea name="address" rows="3" 
-                          style="width: 100%; padding: 0.75rem; border: 1px solid #ddd; border-radius: 5px;"><?php echo htmlspecialchars($user['address']); ?></textarea>
+            <div style="margin-bottom:1.5rem;">
+                <label class="form-label">Address</label>
+                <textarea name="address" rows="3" class="form-input"><?php echo htmlspecialchars($user['address']); ?></textarea>
             </div>
             
             <hr style="margin: 1.5rem 0; border: none; border-top: 1px solid #ddd;">
@@ -172,7 +168,7 @@ include '../includes/header.php';
             </div>
             
             <button type="submit" 
-                    style="width: 100%; padding: 0.75rem; background-color: #55C173; color: white; border: none; border-radius: 5px; font-weight: bold; cursor: pointer;">
+                    style="width:100%;padding:.85rem;background:linear-gradient(135deg,#55C173,#2E6F40);color:white;border:none;border-radius:10px;font-weight:700;cursor:pointer;font-size:.95rem;box-shadow:0 4px 14px rgba(46,111,64,0.4);transition:all .25s;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform=''">
                 Update Profile
             </button>
         </form>

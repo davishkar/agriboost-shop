@@ -61,58 +61,49 @@ include '../includes/header.php';
 
 <style>
     .export-container {
-        max-width: 800px;
-        margin: 3rem auto;
-        background: white;
-        padding: 3rem;
-        border-radius: 10px;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        max-width: 700px; margin: 3rem auto;
+        padding: 2.5rem 2rem;
         text-align: center;
     }
-    
-    .export-icon {
-        font-size: 5rem;
-        margin-bottom: 1rem;
-    }
-    
+    .export-icon { font-size: 4.5rem; margin-bottom: 1rem; filter: drop-shadow(0 4px 12px rgba(85,193,115,0.4)); }
     .btn-export {
-        display: inline-block;
-        padding: 1rem 2rem;
-        background-color: #55C173;
-        color: white;
-        text-decoration: none;
-        border-radius: 5px;
-        font-weight: bold;
-        font-size: 1.1rem;
-        transition: background-color 0.3s;
+        display: inline-block; padding: 1rem 2.2rem;
+        background: linear-gradient(135deg,#55C173,#2E6F40);
+        color: white; text-decoration: none; border-radius: 12px;
+        font-weight: 700; font-size: 1.05rem;
+        box-shadow: 0 6px 20px rgba(46,111,64,0.4);
+        transition: all .25s;
     }
-    
-    .btn-export:hover {
-        background-color: #419759;
-    }
-    
+    .btn-export:hover { transform: translateY(-3px); box-shadow: 0 10px 28px rgba(46,111,64,0.5); opacity: .92; }
     .info-box {
-        background-color: #d1ecf1;
-        border: 1px solid #bee5eb;
-        border-radius: 5px;
-        padding: 1rem;
-        margin: 2rem 0;
+        background: rgba(209,236,241,0.55);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        border: 1px solid rgba(190,229,235,0.6);
+        border-radius: 12px;
+        padding: 1.2rem 1.4rem;
+        margin: 1.8rem 0;
         text-align: left;
     }
-    
-    .info-box ul {
-        margin: 0.5rem 0 0 1.5rem;
-    }
-    
-    .info-box li {
-        margin: 0.25rem 0;
-    }
+    .info-box ul { margin: .5rem 0 0 1.5rem; }
+    .info-box li { margin: .25rem 0; color: #0c5460; font-size: .88rem; }
 </style>
 
-<div class="container">
-    <div class="export-container">
+<div class="container" style="padding: 0 1rem;">
+    <div class="glass-card export-container">
         <div class="export-icon">📄</div>
-        <h2 style="color: #2E6F40; margin-bottom: 1rem;">Export Orders Report</h2>
+        <!-- Breadcrumb Navigation -->
+        <nav aria-label="breadcrumb" style="margin-bottom: 1.5rem; text-align:left;">
+            <ol class="glass-breadcrumb" style="display:flex;align-items:center;gap:.4rem;list-style:none;padding:.6rem 1rem;border-radius:10px;font-size:.85rem;flex-wrap:wrap;">
+                <li><a href="/agriboost-shop/index.php" style="color:#6AEC8E;text-decoration:none;font-weight:500;">🏠 Home</a></li>
+                <li style="color:rgba(255,255,255,0.5);">›</li>
+                <li><a href="index.php" style="color:#6AEC8E;text-decoration:none;font-weight:500;">📊 Dashboard</a></li>
+                <li style="color:rgba(255,255,255,0.5);">›</li>
+                <li><span style="color:#fff;font-weight:600;">📄 Export Orders</span></li>
+            </ol>
+        </nav>
+
+        <h2 style="color:#2E6F40;font-weight:800;font-size:1.5rem;margin-bottom:.8rem;">Export Orders Report</h2>
         <p style="color: #666; margin-bottom: 2rem;">Download all orders data in CSV format for analysis and record keeping.</p>
         
         <div class="info-box">

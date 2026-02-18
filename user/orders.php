@@ -31,87 +31,50 @@ include '../includes/header.php';
 ?>
 
 <style>
-    .orders-container {
-        max-width: 1000px;
-        margin: 2rem auto;
-    }
-    
+    .orders-container { max-width: 1000px; margin: 2rem auto; padding: 0 1rem; }
+
     .order-card {
-        background: white;
-        padding: 1.5rem;
-        border-radius: 10px;
+        padding: 1.6rem;
         margin-bottom: 1.5rem;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        transition: transform .25s, box-shadow .25s;
     }
-    
+    .order-card:hover { transform: translateY(-3px); box-shadow: 0 14px 40px rgba(0,0,0,0.16), inset 0 1px 0 rgba(255,255,255,0.7); }
+
     .order-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 1rem;
-        padding-bottom: 1rem;
-        border-bottom: 2px solid #eee;
+        display: flex; justify-content: space-between; align-items: center;
+        margin-bottom: 1rem; padding-bottom: 1rem;
+        border-bottom: 1px solid rgba(0,0,0,0.08);
     }
-    
-    .status-badge {
-        padding: 0.5rem 1rem;
-        border-radius: 20px;
-        font-size: 0.85rem;
-        font-weight: bold;
-    }
-    
-    .status-pending {
-        background-color: #fff3cd;
-        color: #856404;
-    }
-    
-    .status-processing {
-        background-color: #cfe2ff;
-        color: #084298;
-    }
-    
-    .status-shipped {
-        background-color: #d1ecf1;
-        color: #0c5460;
-    }
-    
-    .status-delivered {
-        background-color: #d4edda;
-        color: #155724;
-    }
-    
-    .status-cancelled {
-        background-color: #f8d7da;
-        color: #721c24;
-    }
-    
-    .order-items-table {
-        width: 100%;
-        margin-top: 1rem;
-    }
-    
+
+    .status-badge { padding: .4rem 1rem; border-radius: 20px; font-size: .82rem; font-weight: 700; }
+    .status-pending        { background: rgba(255,243,205,0.9); color: #856404; }
+    .status-confirmed      { background: rgba(209,250,229,0.9); color: #065f46; }
+    .status-processing     { background: rgba(207,226,255,0.9); color: #084298; }
+    .status-packed         { background: rgba(237,233,254,0.9); color: #5b21b6; }
+    .status-out_for_delivery { background: rgba(255,237,213,0.9); color: #9a3412; }
+    .status-shipped        { background: rgba(209,236,241,0.9); color: #0c5460; }
+    .status-delivered      { background: rgba(209,250,229,0.9); color: #155724; }
+    .status-cancelled      { background: rgba(254,226,226,0.9); color: #721c24; }
+
+    .order-items-table { width: 100%; margin-top: 1rem; border-collapse: collapse; }
     .order-items-table th {
-        background-color: #f8f9fa;
-        padding: 0.75rem;
-        text-align: left;
-        border-bottom: 2px solid #dee2e6;
+        background: linear-gradient(90deg,rgba(46,111,64,0.1),rgba(85,193,115,0.08));
+        padding: .7rem 1rem; text-align: left; font-size: .83rem;
+        border-bottom: 2px solid rgba(46,111,64,0.15); color: #2E6F40; font-weight: 700;
     }
-    
-    .order-items-table td {
-        padding: 0.75rem;
-        border-bottom: 1px solid #eee;
-    }
+    .order-items-table td { padding: .7rem 1rem; border-bottom: 1px solid rgba(0,0,0,0.05); font-size: .88rem; }
+    .order-items-table tr:last-child td { border-bottom: none; }
 </style>
 
 <div class="container orders-container">
-    <h2 style="color: #2E6F40; margin-bottom: 1.5rem;">📦 My Orders</h2>
+    <h2 style="color:#fff;font-weight:800;font-size:1.6rem;margin-bottom:1.5rem;text-shadow:0 2px 8px rgba(0,0,0,0.3);">📦 My Orders</h2>
     
     <?php if ($orders->num_rows > 0): ?>
         <?php while ($order = $orders->fetch_assoc()): ?>
-            <div class="order-card">
+            <div class="glass-card order-card">
                 <div class="order-header">
                     <div>
-                        <h3 style="color: #2E6F40; margin-bottom: 0.5rem;">Order #<?php echo $order['id']; ?></h3>
+                        <h3 style="color:#2E6F40;margin-bottom:.4rem;font-weight:700;">Order #<?php echo $order['id']; ?></h3>
                         <p style="color: #666; font-size: 0.9rem;">
                             Placed on: <?php echo date('F j, Y, g:i a', strtotime($order['created_at'])); ?>
                         </p>
@@ -171,11 +134,9 @@ include '../includes/header.php';
             </div>
         <?php endwhile; ?>
     <?php else: ?>
-        <div style="background: white; padding: 3rem; text-align: center; border-radius: 10px;">
-            <p style="font-size: 1.2rem; color: #666; margin-bottom: 1rem;">No orders yet</p>
-            <a href="../index.php" style="display: inline-block; padding: 0.75rem 1.5rem; background-color: #55C173; color: white; text-decoration: none; border-radius: 5px;">
-                Start Shopping
-            </a>
+        <div class="glass-card" style="padding:3rem;text-align:center;">
+            <p style="font-size:1.2rem;color:#2E6F40;margin-bottom:1rem;">No orders yet</p>
+            <a href="../index.php" class="btn-checkout" style="display:inline-block;padding:.9rem 2rem;background:linear-gradient(135deg,#55C173,#2E6F40);color:white;text-decoration:none;border-radius:12px;font-weight:700;box-shadow:0 5px 16px rgba(46,111,64,0.4);">Start Shopping</a>
         </div>
     <?php endif; ?>
 </div>

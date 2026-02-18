@@ -134,96 +134,62 @@ include '../includes/header.php';
 ?>
 
 <style>
-    .admin-container {
-        max-width: 1200px;
-        margin: 2rem auto;
-    }
-    
-    .add-product-form {
-        background: white;
-        padding: 2rem;
-        border-radius: 10px;
-        margin-bottom: 2rem;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-    }
-    
-    .form-grid {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 1rem;
-    }
-    
-    .form-group {
-        margin-bottom: 1rem;
-    }
-    
-    .form-group label {
-        display: block;
-        margin-bottom: 0.5rem;
-        font-weight: bold;
-    }
-    
+    .admin-container { max-width: 1200px; margin: 2rem auto; padding: 0 1rem; }
+
+    .add-product-form { padding: 2rem; margin-bottom: 2rem; }
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .form-group { margin-bottom: 1rem; }
+    .form-group label { display: block; margin-bottom: .4rem; font-weight: 600; color: #1C4A29; font-size: .88rem; }
     .form-group input,
     .form-group textarea,
     .form-group select {
-        width: 100%;
-        padding: 0.75rem;
-        border: 1px solid #ddd;
-        border-radius: 5px;
+        width: 100%; padding: .7rem .9rem;
+        border: 1px solid rgba(46,111,64,0.25);
+        border-radius: 8px;
+        background: rgba(255,255,255,0.8);
+        font-size: .9rem;
+        transition: border-color .2s, box-shadow .2s;
     }
-    
-    .products-table {
-        width: 100%;
-        background: white;
-        border-radius: 10px;
-        overflow: hidden;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus {
+        outline: none;
+        border-color: #55C173;
+        box-shadow: 0 0 0 3px rgba(85,193,115,0.2);
     }
-    
+
+    .products-table { width: 100%; border-collapse: collapse; }
     .products-table th {
-        background-color: #2E6F40;
-        color: white;
-        padding: 1rem;
-        text-align: left;
+        background: linear-gradient(90deg,#2E6F40,#419759);
+        color: white; padding: 1rem 1.2rem; text-align: left; font-size: .84rem; letter-spacing: .04em;
     }
-    
-    .products-table td {
-        padding: 1rem;
-        border-bottom: 1px solid #ddd;
-    }
-    
-    .btn-edit {
-        padding: 0.5rem 1rem;
-        background-color: #55C173;
-        color: white;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        margin-right: 0.5rem;
-    }
-    
-    .btn-delete {
-        padding: 0.5rem 1rem;
-        background-color: #dc3545;
-        color: white;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-    }
-    
-    .btn-add {
-        padding: 0.75rem 1.5rem;
-        background-color: #55C173;
-        color: white;
-        border: none;
-        border-radius: 5px;
-        font-weight: bold;
-        cursor: pointer;
-    }
+    .products-table td { padding: .85rem 1.2rem; border-bottom: 1px solid rgba(0,0,0,0.06); font-size: .88rem; vertical-align: middle; }
+    .products-table tr:last-child td { border-bottom: none; }
+    .products-table tbody tr:hover { background: rgba(85,193,115,0.06); }
+
+    .btn-edit   { padding: .45rem .9rem; background: linear-gradient(135deg,#55C173,#2E6F40); color:#fff; border:none; border-radius:7px; cursor:pointer; font-size:.82rem; font-weight:600; margin-right:.4rem; transition: all .2s; box-shadow: 0 3px 10px rgba(46,111,64,0.3); }
+    .btn-edit:hover { transform: translateY(-1px); box-shadow: 0 5px 14px rgba(46,111,64,0.4); }
+    .btn-delete { padding: .45rem .9rem; background: linear-gradient(135deg,#ef4444,#b91c1c); color:#fff; border:none; border-radius:7px; cursor:pointer; font-size:.82rem; font-weight:600; transition: all .2s; box-shadow: 0 3px 10px rgba(185,28,28,0.25); }
+    .btn-delete:hover { transform: translateY(-1px); box-shadow: 0 5px 14px rgba(185,28,28,0.35); }
+    .btn-add    { padding: .75rem 1.6rem; font-size:.92rem; }
+
+    .section-heading { color: #fff; font-size: 1rem; font-weight: 700; margin-bottom: 1rem; display: flex; align-items: center; gap: .5rem; }
+    .section-heading span { display: inline-block; width: 4px; height: 18px; background: linear-gradient(180deg,#55C173,#2E6F40); border-radius: 2px; }
 </style>
 
 <div class="container admin-container">
-    <h2 style="color: #2E6F40; margin-bottom: 1.5rem;">📦 Manage Products</h2>
+    <!-- Breadcrumb Navigation -->
+    <nav aria-label="breadcrumb" style="margin-bottom: 1.2rem;">
+        <ol class="glass-breadcrumb" style="display:flex;align-items:center;gap:.4rem;list-style:none;padding:.6rem 1rem;border-radius:10px;font-size:.85rem;flex-wrap:wrap;">
+            <li><a href="/agriboost-shop/index.php" style="color:#6AEC8E;text-decoration:none;font-weight:500;">🏠 Home</a></li>
+            <li style="color:rgba(255,255,255,0.5);">›</li>
+            <li><a href="index.php" style="color:#6AEC8E;text-decoration:none;font-weight:500;">📊 Dashboard</a></li>
+            <li style="color:rgba(255,255,255,0.5);">›</li>
+            <li><span style="color:#fff;font-weight:600;">📦 Products</span></li>
+        </ol>
+    </nav>
+
+    <h2 style="color:#fff;font-weight:800;font-size:1.6rem;margin-bottom:1.5rem;text-shadow:0 2px 8px rgba(0,0,0,0.3);">📦 Manage Products</h2>
     
     <?php if ($message): ?>
         <div class="alert alert-success"><?php echo $message; ?></div>
@@ -234,8 +200,8 @@ include '../includes/header.php';
     <?php endif; ?>
     
     <!-- Add Product Form -->
-    <div class="add-product-form">
-        <h3 style="color: #2E6F40; margin-bottom: 1rem;">Add New Product</h3>
+    <p class="section-heading"><span></span> Add New Product</p>
+    <div class="glass-card add-product-form">
         <form method="POST" action="" enctype="multipart/form-data">
             <input type="hidden" name="action" value="add">
             <div class="form-grid">
@@ -265,12 +231,13 @@ include '../includes/header.php';
                 <input type="file" name="image" accept="image/*">
                 <small style="color: #666;">Allowed: JPG, PNG, GIF, WEBP (Max 5MB)</small>
             </div>
-            <button type="submit" class="btn-add">Add Product</button>
+            <button type="submit" class="gradient-btn btn-add">Add Product</button>
         </form>
     </div>
     
     <!-- Products List -->
-    <h3 style="color: #2E6F40; margin-bottom: 1rem;">All Products</h3>
+    <p class="section-heading"><span></span> All Products</p>
+    <div class="glass-table">
     <table class="products-table">
         <thead>
             <tr>
@@ -316,11 +283,12 @@ include '../includes/header.php';
             <?php endif; ?>
         </tbody>
     </table>
+    </div>
 </div>
 
-<!-- Edit Product Modal (Simple Implementation) -->
-<div id="editModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000;">
-    <div style="max-width: 600px; margin: 3rem auto; background: white; padding: 2rem; border-radius: 10px;">
+<!-- Edit Product Modal -->
+<div id="editModal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.55);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);z-index:1000;">
+    <div class="glass-card" style="max-width:600px;margin:3rem auto;padding:2rem;border-radius:16px;">
         <h3 style="color: #2E6F40; margin-bottom: 1rem;">Edit Product</h3>
         <form method="POST" action="" enctype="multipart/form-data">
             <input type="hidden" name="action" value="edit">

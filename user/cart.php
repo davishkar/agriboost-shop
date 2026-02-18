@@ -85,102 +85,56 @@ include '../includes/header.php';
 ?>
 
 <style>
-    .cart-container {
-        max-width: 900px;
-        margin: 2rem auto;
-    }
-    
-    .cart-table {
-        width: 100%;
-        background: white;
-        border-radius: 10px;
-        overflow: hidden;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-    }
-    
+    .cart-container { max-width: 900px; margin: 2rem auto; padding: 0 1rem; }
+
+    .cart-table { width: 100%; border-collapse: collapse; }
     .cart-table th {
-        background-color: #2E6F40;
-        color: white;
-        padding: 1rem;
-        text-align: left;
+        background: linear-gradient(90deg,#2E6F40,#419759);
+        color: white; padding: 1rem 1.2rem; text-align: left; font-size: .84rem; letter-spacing: .04em;
     }
-    
-    .cart-table td {
-        padding: 1rem;
-        border-bottom: 1px solid #ddd;
-    }
-    
-    .cart-table tr:last-child td {
-        border-bottom: none;
-    }
-    
+    .cart-table td { padding: .9rem 1.2rem; border-bottom: 1px solid rgba(0,0,0,0.06); font-size: .9rem; vertical-align: middle; }
+    .cart-table tr:last-child td { border-bottom: none; }
+    .cart-table tbody tr:hover { background: rgba(85,193,115,0.05); }
+
     .quantity-input {
-        width: 60px;
-        padding: 0.5rem;
-        border: 1px solid #ddd;
-        border-radius: 5px;
-        text-align: center;
+        width: 64px; padding: .45rem .5rem;
+        border: 1px solid rgba(46,111,64,0.25); border-radius: 8px;
+        text-align: center; background: rgba(255,255,255,0.85); font-size: .9rem;
     }
-    
-    .btn-update {
-        padding: 0.5rem 1rem;
-        background-color: #55C173;
-        color: white;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        font-size: 0.9rem;
-    }
-    
-    .btn-remove {
-        padding: 0.5rem 1rem;
-        background-color: #dc3545;
-        color: white;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        font-size: 0.9rem;
-    }
-    
-    .cart-summary {
-        background: white;
-        padding: 1.5rem;
-        border-radius: 10px;
-        margin-top: 1rem;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-    }
-    
+    .btn-update { padding: .45rem .85rem; background: linear-gradient(135deg,#55C173,#2E6F40); color:#fff; border:none; border-radius:7px; cursor:pointer; font-size:.82rem; font-weight:600; box-shadow:0 3px 10px rgba(46,111,64,0.3); transition: all .2s; }
+    .btn-update:hover { transform: translateY(-1px); }
+    .btn-remove { padding: .45rem .85rem; background: linear-gradient(135deg,#ef4444,#b91c1c); color:#fff; border:none; border-radius:7px; cursor:pointer; font-size:.82rem; font-weight:600; box-shadow:0 3px 10px rgba(185,28,28,0.25); transition: all .2s; }
+    .btn-remove:hover { transform: translateY(-1px); }
+
+    .cart-summary { padding: 1.5rem 1.8rem; margin-top: 1rem; }
     .btn-checkout {
-        display: inline-block;
-        padding: 1rem 2rem;
-        background-color: #55C173;
-        color: white;
-        text-decoration: none;
-        border-radius: 5px;
-        font-weight: bold;
-        transition: background-color 0.3s;
+        display: inline-block; padding: .9rem 2rem;
+        background: linear-gradient(135deg,#55C173,#2E6F40);
+        color: white; text-decoration: none; border-radius: 12px;
+        font-weight: 700; font-size: .95rem;
+        box-shadow: 0 5px 16px rgba(46,111,64,0.4);
+        transition: all .25s;
     }
-    
-    .btn-checkout:hover {
-        background-color: #419759;
-    }
+    .btn-checkout:hover { transform: translateY(-2px); box-shadow: 0 8px 22px rgba(46,111,64,0.5); }
+
+    .section-heading { color: #fff; font-size: 1rem; font-weight: 700; margin-bottom: 1rem; display: flex; align-items: center; gap: .5rem; }
+    .section-heading span { display: inline-block; width: 4px; height: 18px; background: linear-gradient(180deg,#55C173,#2E6F40); border-radius: 2px; }
 </style>
 
 <div class="container cart-container">
-    <h2 style="color: #2E6F40; margin-bottom: 1.5rem;">🛒 Shopping Cart</h2>
+    <h2 style="color:#fff;font-weight:800;font-size:1.6rem;margin-bottom:1.5rem;text-shadow:0 2px 8px rgba(0,0,0,0.3);">🛒 Shopping Cart</h2>
     
     <?php if ($message): ?>
         <div class="alert alert-success"><?php echo $message; ?></div>
     <?php endif; ?>
     
     <?php if (empty($_SESSION['cart'])): ?>
-        <div style="background: white; padding: 3rem; text-align: center; border-radius: 10px;">
-            <p style="font-size: 1.2rem; color: #666; margin-bottom: 1rem;">Your cart is empty</p>
-            <a href="../index.php" style="display: inline-block; padding: 0.75rem 1.5rem; background-color: #55C173; color: white; text-decoration: none; border-radius: 5px;">
-                Continue Shopping
-            </a>
+        <div class="glass-card" style="padding:3rem;text-align:center;">
+            <p style="font-size:1.2rem;color:#2E6F40;margin-bottom:1rem;">Your cart is empty</p>
+            <a href="../index.php" class="btn-checkout">Continue Shopping</a>
         </div>
     <?php else: ?>
+        <div class="glass-table">
         <table class="cart-table">
             <thead>
                 <tr>
@@ -216,14 +170,15 @@ include '../includes/header.php';
                 <?php endforeach; ?>
             </tbody>
         </table>
+        </div>
         
-        <div class="cart-summary">
-            <div style="display: flex; justify-content: space-between; align-items: center;">
+        <div class="glass-card cart-summary">
+            <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;">
                 <div>
-                    <h3 style="color: #2E6F40;">Total Amount: ₹<?php echo number_format($total, 2); ?></h3>
+                    <h3 style="color:#2E6F40;font-weight:800;font-size:1.2rem;">Total Amount: ₹<?php echo number_format($total, 2); ?></h3>
                 </div>
                 <div>
-                    <a href="../index.php" style="margin-right: 1rem; color: #2E6F40; text-decoration: none;">← Continue Shopping</a>
+                    <a href="../index.php" style="margin-right:1rem;color:#6AEC8E;text-decoration:none;font-weight:600;">← Continue Shopping</a>
                     <a href="checkout.php" class="btn-checkout">Proceed to Checkout</a>
                 </div>
             </div>

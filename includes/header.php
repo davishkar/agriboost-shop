@@ -46,12 +46,67 @@ $current_page = basename($_SERVER['PHP_SELF']);
     <style>
         body {
             font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #0C2713 0%, #1C4A29 35%, #2E6F40 65%, #1C4A29 100%);
+            min-height: 100vh;
         }
+
+        /* ── Global Glassmorphism Utilities ── */
+        .glass-card {
+            background: rgba(255,255,255,0.70);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255,255,255,0.40);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.14), inset 0 1px 0 rgba(255,255,255,0.6);
+            border-radius: 16px;
+        }
+        .glass-card-dark {
+            background: rgba(12,39,19,0.72);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(85,193,115,0.25);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.30);
+            border-radius: 16px;
+        }
+        .glass-table {
+            background: rgba(255,255,255,0.68);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border: 1px solid rgba(255,255,255,0.35);
+            box-shadow: 0 6px 24px rgba(0,0,0,0.12);
+            border-radius: 14px;
+            overflow: hidden;
+        }
+        .glass-breadcrumb {
+            background: rgba(255,255,255,0.30);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.45);
+            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+        }
+        .gradient-btn {
+            background: linear-gradient(135deg, #55C173, #2E6F40);
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all .25s;
+            box-shadow: 0 4px 14px rgba(46,111,64,0.35);
+        }
+        .gradient-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(46,111,64,0.45);
+            opacity: .92;
+        }
+        /* Alert overrides for glass pages */
+        .alert { border-radius: 10px; padding: .85rem 1.2rem; margin-bottom: 1rem; font-size: .9rem; }
+        .alert-success { background: rgba(209,250,229,0.85); color: #065f46; border: 1px solid rgba(52,211,153,0.4); }
+        .alert-error   { background: rgba(254,226,226,0.85); color: #991b1b; border: 1px solid rgba(252,165,165,0.4); }
     </style>
 </head>
-<body class="bg-gray-50">
+<body>
     <!-- Navigation Bar -->
-    <nav class="bg-agri-darker text-white shadow-lg sticky top-0 z-50">
+    <nav class="text-white shadow-lg sticky top-0 z-50" style="background: rgba(12,39,19,0.82); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-bottom: 1px solid rgba(85,193,115,0.2);">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
                 <!-- Logo/Brand -->

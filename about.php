@@ -36,11 +36,14 @@ include 'includes/header.php';
     }
     
     .feature-card {
-        background: white;
         padding: 2rem;
-        border-radius: 12px;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        border-radius: 16px;
         transition: transform 0.3s, box-shadow 0.3s;
+        background: rgba(255,255,255,0.70);
+        backdrop-filter: blur(14px);
+        -webkit-backdrop-filter: blur(14px);
+        border: 1px solid rgba(255,255,255,0.40);
+        box-shadow: 0 6px 24px rgba(0,0,0,0.12);
     }
     
     .feature-card:hover {
@@ -133,7 +136,7 @@ include 'includes/header.php';
 
 <div class="about-section">
     <!-- Mission & Vision -->
-    <div style="background: white; padding: 3rem; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); margin-bottom: 3rem;">
+    <div style="background:rgba(255,255,255,0.70);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,0.40);box-shadow:0 8px 32px rgba(0,0,0,0.12);border-radius:16px;padding:3rem;margin-bottom:3rem;">
         <div style="text-align: center; margin-bottom: 2rem;">
             <span style="font-size: 3rem;">🎯</span>
             <h2 style="color: #2E6F40; font-size: 2.5rem; margin: 1rem 0;">Our Mission</h2>
@@ -219,7 +222,7 @@ include 'includes/header.php';
     </div>
 
     <!-- Our Values -->
-    <div style="background: white; padding: 3rem; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+    <div style="background:rgba(255,255,255,0.70);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,0.40);box-shadow:0 8px 32px rgba(0,0,0,0.12);border-radius:16px;padding:3rem;">
         <h2 style="color: #2E6F40; font-size: 2.5rem; margin-bottom: 2rem;">
             <span style="font-size: 2.5rem;">💚</span> Our Values
         </h2>

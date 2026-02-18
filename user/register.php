@@ -91,12 +91,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
     </script>
 </head>
-<body class="bg-gradient-to-br from-green-50 to-green-100">
+<body style="background: linear-gradient(135deg, #0C2713 0%, #1C4A29 40%, #2E6F40 70%, #1C4A29 100%); min-height: 100vh;">
     <div class="min-h-screen flex items-center justify-center px-4 py-12">
-        <div class="max-w-md w-full bg-white rounded-xl shadow-2xl p-8">
+        <div class="max-w-md w-full p-8" style="background:rgba(255,255,255,0.72);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border:1px solid rgba(255,255,255,0.45);box-shadow:0 20px 60px rgba(0,0,0,0.25),inset 0 1px 0 rgba(255,255,255,0.7);border-radius:20px;">
             <div class="text-center mb-6">
-                <h2 class="text-3xl font-bold text-agri-dark">Create Account</h2>
-                <p class="text-gray-600 mt-2">Join AgriBoost Shop today</p>
+                <h2 class="text-3xl font-bold" style="background:linear-gradient(135deg,#2E6F40,#55C173);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Create Account</h2>
+                <p class="text-gray-500 mt-2">Join AgriBoost Shop today</p>
             </div>
             
             <?php if ($error): ?>
@@ -153,7 +153,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 </div>
                 
                 <button type="submit" 
-                        class="w-full bg-agri-primary hover:bg-agri-medium text-white font-bold py-3 px-4 rounded-lg transition-all duration-300 transform hover:scale-105">
+                        class="w-full text-white font-bold py-3 px-4 rounded-lg transition-all duration-300" style="background:linear-gradient(135deg,#55C173,#2E6F40);box-shadow:0 4px 14px rgba(46,111,64,0.4);" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 8px 20px rgba(46,111,64,0.5)'" onmouseout="this.style.transform='';this.style.boxShadow='0 4px 14px rgba(46,111,64,0.4)'">
                     Register
                 </button>
             </form>

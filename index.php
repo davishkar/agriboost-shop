@@ -48,7 +48,7 @@ include 'includes/header.php';
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
         <?php if ($result->num_rows > 0): ?>
             <?php while ($product = $result->fetch_assoc()): ?>
-                <div class="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-2 overflow-hidden">
+            <div class="overflow-hidden transition-all duration-300" style="background:rgba(255,255,255,0.72);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,0.45);box-shadow:0 6px 24px rgba(0,0,0,0.12);border-radius:16px;" onmouseover="this.style.transform='translateY(-6px)';this.style.boxShadow='0 16px 40px rgba(0,0,0,0.18)'" onmouseout="this.style.transform='';this.style.boxShadow='0 6px 24px rgba(0,0,0,0.12)'">
                     <!-- Product Image -->
                     <div class="bg-agri-lightest h-48 flex items-center justify-center overflow-hidden">
                         <?php if ($product['image']): ?>
@@ -88,14 +88,13 @@ include 'includes/header.php';
                                 <input type="hidden" name="product_id" value="<?php echo $product['id']; ?>">
                                 <input type="hidden" name="action" value="add">
                                 <button type="submit" 
-                                        class="w-full bg-agri-primary hover:bg-agri-medium text-white font-bold py-3 px-4 rounded-lg transition-all duration-300 disabled:bg-gray-400 disabled:cursor-not-allowed"
-                                        <?php echo ($product['stock'] <= 0) ? 'disabled' : ''; ?>>
+                                        class="w-full text-white font-bold py-3 px-4 rounded-lg transition-all duration-300" style="background:linear-gradient(135deg,#55C173,#2E6F40);box-shadow:0 4px 12px rgba(46,111,64,0.35);" <?php echo ($product['stock'] <= 0) ? 'disabled style="background:linear-gradient(135deg,#9ca3af,#6b7280);box-shadow:none;cursor:not-allowed;"' : ''; ?>>
                                     Add to Cart
                                 </button>
                             </form>
                         <?php else: ?>
                             <a href="user/login.php">
-                                <button class="w-full bg-agri-primary hover:bg-agri-medium text-white font-bold py-3 px-4 rounded-lg transition-all duration-300">
+                                <button class="w-full text-white font-bold py-3 px-4 rounded-lg transition-all duration-300" style="background:linear-gradient(135deg,#55C173,#2E6F40);box-shadow:0 4px 12px rgba(46,111,64,0.35);">
                                     Login to Purchase
                                 </button>
                             </a>

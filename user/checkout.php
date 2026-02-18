@@ -46,44 +46,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $total += $item['price'] * $item['quantity'];
         }
         
-        // Start transaction
-        $conn->begin_transaction();
+        // Store pending order info in session and redirect to payment page
+        $_SESSION['pending_order'] = [
+            'shipping_address' => $shipping_address,
+            'total'            => $total,
+            'cart_snapshot'    => $_SESSION['cart'],
+        ];
         
-        try {
-            // Insert order
-            $stmt = $conn->prepare("INSERT INTO orders (user_id, total_amount, status, shipping_address) VALUES (?, ?, 'pending', ?)");
-            $stmt->bind_param("ids", $user_id, $total, $shipping_address);
-            $stmt->execute();
-            $order_id = $conn->insert_id;
-            $stmt->close();
-            
-            // Insert order items
-            $stmt = $conn->prepare("INSERT INTO order_items (order_id, product_id, quantity, price) VALUES (?, ?, ?, ?)");
-            
-            foreach ($_SESSION['cart'] as $product_id => $item) {
-                $stmt->bind_param("iiid", $order_id, $product_id, $item['quantity'], $item['price']);
-                $stmt->execute();
-                
-                // Update product stock
-                $update_stmt = $conn->prepare("UPDATE products SET stock = stock - ? WHERE id = ?");
-                $update_stmt->bind_param("ii", $item['quantity'], $product_id);
-                $update_stmt->execute();
-                $update_stmt->close();
-            }
-            $stmt->close();
-            
-            // Commit transaction
-            $conn->commit();
-            
-            // Clear cart
-            $_SESSION['cart'] = array();
-            
-            $success = 'Order placed successfully! Order ID: #' . $order_id;
-        } catch (Exception $e) {
-            // Rollback on error
-            $conn->rollback();
-            $error = 'Order failed! Please try again.';
-        }
+        header('Location: payment.php');
+        exit();
     }
 }
 
@@ -130,21 +101,13 @@ include '../includes/header.php';
 </style>
 
 <div class="container checkout-container">
-    <h2 style="color: #2E6F40; margin-bottom: 1.5rem;">🛍️ Checkout</h2>
+    <h2 style="color:#fff;font-weight:800;font-size:1.6rem;margin-bottom:1.5rem;text-shadow:0 2px 8px rgba(0,0,0,0.3);">🛍️ Checkout</h2>
     
     <?php if ($error): ?>
         <div class="alert alert-error"><?php echo $error; ?></div>
     <?php endif; ?>
-    
-    <?php if ($success): ?>
-        <div class="alert alert-success">
-            <?php echo $success; ?>
-            <br><br>
-            <a href="orders.php" style="color: #2E6F40; font-weight: bold;">View My Orders</a>
-        </div>
-    <?php else: ?>
-        <div class="checkout-section">
-            <h3 style="color: #2E6F40; margin-bottom: 1rem;">Order Summary</h3>
+        <div class="glass-card" style="padding:1.6rem;margin-bottom:1.5rem;">
+            <h3 style="color:#2E6F40;margin-bottom:1rem;font-weight:700;">Order Summary</h3>
             <table class="order-summary-table">
                 <?php foreach ($_SESSION['cart'] as $item): ?>
                     <tr>
@@ -159,45 +122,40 @@ include '../includes/header.php';
             </table>
         </div>
         
-        <div class="checkout-section">
-            <h3 style="color: #2E6F40; margin-bottom: 1rem;">Shipping Information</h3>
+        <div class="glass-card" style="padding:1.6rem;margin-bottom:1.5rem;">
+            <h3 style="color:#2E6F40;margin-bottom:1rem;font-weight:700;">Shipping Information</h3>
             
             <form method="POST" action="">
                 <div style="margin-bottom: 1rem;">
                     <label style="display: block; margin-bottom: 0.5rem; font-weight: bold;">Name</label>
                     <input type="text" value="<?php echo htmlspecialchars($user['name']); ?>" readonly
-                           style="width: 100%; padding: 0.75rem; border: 1px solid #ddd; border-radius: 5px; background-color: #f5f5f5;">
+                           style="width:100%;padding:.75rem .9rem;border:1px solid rgba(46,111,64,0.2);border-radius:8px;background:rgba(245,245,245,0.7);font-size:.9rem;">
                 </div>
                 
                 <div style="margin-bottom: 1rem;">
                     <label style="display: block; margin-bottom: 0.5rem; font-weight: bold;">Email</label>
                     <input type="email" value="<?php echo htmlspecialchars($user['email']); ?>" readonly
-                           style="width: 100%; padding: 0.75rem; border: 1px solid #ddd; border-radius: 5px; background-color: #f5f5f5;">
+                           style="width:100%;padding:.75rem .9rem;border:1px solid rgba(46,111,64,0.2);border-radius:8px;background:rgba(245,245,245,0.7);font-size:.9rem;">
                 </div>
                 
                 <div style="margin-bottom: 1rem;">
                     <label style="display: block; margin-bottom: 0.5rem; font-weight: bold;">Phone</label>
                     <input type="tel" value="<?php echo htmlspecialchars($user['phone']); ?>" readonly
-                           style="width: 100%; padding: 0.75rem; border: 1px solid #ddd; border-radius: 5px; background-color: #f5f5f5;">
+                           style="width:100%;padding:.75rem .9rem;border:1px solid rgba(46,111,64,0.2);border-radius:8px;background:rgba(245,245,245,0.7);font-size:.9rem;">
                 </div>
                 
                 <div style="margin-bottom: 1.5rem;">
                     <label style="display: block; margin-bottom: 0.5rem; font-weight: bold;">Shipping Address *</label>
                     <textarea name="shipping_address" rows="4" required
-                              style="width: 100%; padding: 0.75rem; border: 1px solid #ddd; border-radius: 5px;"><?php echo htmlspecialchars($user['address']); ?></textarea>
+                              style="width:100%;padding:.75rem .9rem;border:1px solid rgba(46,111,64,0.25);border-radius:8px;background:rgba(255,255,255,0.8);font-size:.9rem;"><?php echo htmlspecialchars($user['address']); ?></textarea>
                 </div>
                 
                 <div style="display: flex; gap: 1rem;">
-                    <a href="cart.php" style="flex: 1; padding: 0.75rem; background-color: #6c757d; color: white; text-align: center; text-decoration: none; border-radius: 5px;">
-                        ← Back to Cart
-                    </a>
-                    <button type="submit" style="flex: 1; padding: 0.75rem; background-color: #55C173; color: white; border: none; border-radius: 5px; font-weight: bold; cursor: pointer;">
-                        Place Order
-                    </button>
+                    <a href="cart.php" style="flex:1;padding:.85rem;background:rgba(108,117,125,0.85);color:white;text-align:center;text-decoration:none;border-radius:10px;font-weight:600;backdrop-filter:blur(4px);">← Back to Cart</a>
+                    <button type="submit" style="flex:1;padding:.85rem;background:linear-gradient(135deg,#55C173,#2E6F40);color:white;border:none;border-radius:10px;font-weight:700;cursor:pointer;box-shadow:0 4px 14px rgba(46,111,64,0.4);transition:all .25s;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform=''">Continue to Payment →</button>
                 </div>
             </form>
         </div>
-    <?php endif; ?>
 </div>
 
 <?php include '../includes/footer.php'; ?>
